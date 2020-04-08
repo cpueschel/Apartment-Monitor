@@ -1,4 +1,4 @@
-from .db_init import conn
+from db_init import conn
 
 def insert_values(table_name: str, values_string: str):
     c = conn.cursor()
