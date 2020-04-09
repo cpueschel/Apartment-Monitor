@@ -21,7 +21,6 @@ def calculate_apartment_data_features():
     apartment_df["Change Versus Last Day"] = apartment_df["price"].copy()
     apartment_df["All Time Low?"] = None
 
-
     current_date = apartment_df['date'].max()
 
     newest_apts_indexes = []
@@ -45,9 +44,18 @@ def calculate_apartment_data_features():
         # Change Versus Last Day
         last_day_index = grouped_apartment.index[1]
         apartment_df.at[index, "Change Versus Last Day"] -= apartment_df.at[last_day_index, "price"]
-    return apartment_df.loc[newest_apts_indexes,cols].sort_values(by="price", ascending=True)
+    return apartment_df.loc[newest_apts_indexes, cols].sort_values(by="price", ascending=True)
 
 
 def send_emails():
     # TODO: Convert the dataframe over to a html table & email it out once a day!
-    pass
+    df = calculate_apartment_data_features()
+
+    # Find the lowest price
+    filter = (df["price"] < 2500) & (df["Change Versus Last Day"] < 0)
+    low = df.loc[filter].iloc[0]
+
+    html = df.to_html()
+    title = f"Apartments: {low['name']} Changed ${low['Change Versus Last Day']} to ${low['price']}"
+
+    # Now Send the HTML In an email
