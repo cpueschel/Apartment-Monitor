@@ -1,0 +1,1 @@
+EMAIL_RECIPIENTS = ["***REMOVED***", "***REMOVED***"]

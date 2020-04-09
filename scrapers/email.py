@@ -1,6 +1,10 @@
 import pandas as pd
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 from db_init import conn
+from settings import EMAIL_RECIPIENTS
 
 
 def get_apartment_data():
@@ -59,3 +63,17 @@ def send_emails():
     title = f"Apartments: {low['name']} Changed ${low['Change Versus Last Day']} to ${low['price']}"
 
     # Now Send the HTML In an email
+
+    sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+    from_email = Email("from_email@example.com")
+    to_email = To("from_email@example.com")
+    subject = "Sending with SendGrid is Fun"
+    content = Content("text/plain", "and easy to do anywhere, even with Python")
+    mail = Mail(from_email, to_email, subject, content)
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+
+
+
