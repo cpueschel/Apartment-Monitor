@@ -1,0 +1,7 @@
+import os
+import json
+
+RECIPIENT_EMAILS = json.loads(os.environ['APARTMENT_SPIDER_RECIPIENT_EMAILS'])
+RECIPIENT_NAMES = json.loads(os.environ['APARTMENT_SPIDER_RECIPIENT_NAMES'])
+API_KEY  = os.environ['APARTMENT_SPIDER_API_KEY']
+PORT = os.environ['APARTMENT_SPIDER_API_PORT']

@@ -6,13 +6,13 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 from db_init import conn
-from settings import RECIPIENT_EMAILS, RECIPIENT_NAMES, API_KEY, PORT
+from config import RECIPIENT_EMAILS, RECIPIENT_NAMES, API_KEY, PORT
 
 
 def get_apartment_data():
     query = """SELECT * from prices
     left join apartment on apartment.rowid = prices.apartment_id
-    where prices.apartment_type='studio' or prices.apartment_type='1 bedroom';"""
+    where prices.apartment_type='studio' or prices.apartment_type='1 bedroom' or prices.apartment_type='2 bedroom';"""
 
     apartment_df = pd.read_sql(query, conn)
     return apartment_df

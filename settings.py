@@ -1,6 +1,0 @@
-RECIPIENT_EMAILS = ["***REMOVED***", "***REMOVED***"]
-RECIPIENT_NAMES = ["***REMOVED***", "***REMOVED***"]
-
-API_KEY = '***REMOVED***'
-
-PORT = 465  # For SSL
