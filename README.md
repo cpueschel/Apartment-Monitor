@@ -1,5 +1,6 @@
-# web-spider
-A web scraper for all the things that we are interested in grabbing
+# An Extensible Web Scraper for Apartments
+**Scrapes, Stores in Database, Generates Metrics, Emails**
+![What it looks like](/doc/apartmentscraper.gif?raw=true "Quick Demo Email")
 
 # Getting Started
 ```bash
@@ -18,5 +19,5 @@ scrapy crawl apartments_avalon
 python send_email.py
 ```
 
-# What it looks like
-
+# Send Grid
+This project uses a send grid email server to send the emails. Since we just use a basic smtp with SSL, any SMTP client will work.

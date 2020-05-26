@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 from db_init import conn
-from config import RECIPIENT_EMAILS, RECIPIENT_NAMES, API_KEY, PORT
+from config import RECIPIENT_EMAILS, RECIPIENT_NAMES, API_KEY, PORT, SENDER_EMAIL
 
 
 def get_apartment_data():
@@ -16,6 +16,17 @@ def get_apartment_data():
 
     apartment_df = pd.read_sql(query, conn)
     return apartment_df
+
+def get_previous_date_index(grouped_apartment):
+    i = 0
+    current = grouped_apartment['date'].iloc[i]
+    while i < len(grouped_apartment.index)-1:
+        previous = grouped_apartment['date'].iloc[i]
+
+        if current - previous > 60*60*24:
+            return grouped_apartment.index[i]
+        i+=1
+    return grouped_apartment.index[-1]
 
 
 def calculate_apartment_data_features():
@@ -48,7 +59,7 @@ def calculate_apartment_data_features():
             apartment_df.at[index, "All Time Low?"] = '-'
 
         # Change Versus Last Day
-        last_day_index = grouped_apartment.index[1]
+        last_day_index = get_previous_date_index(grouped_apartment)
         apartment_df.at[index, "Change Versus Last Day"] -= apartment_df.at[last_day_index, "price"]
     return apartment_df.loc[newest_apts_indexes, cols].sort_values(by="price", ascending=True)
 
@@ -143,8 +154,8 @@ def send_apartment_emails(send=True, css=None):
                         """
 
         if send:
-            print(f"Sending message from={RECIPIENT_EMAILS[1]} to {email}")
-            send_email(title, message_text + message_html, sender_email=RECIPIENT_EMAILS[1], receiver_email=email)
+            print(f"Sending message from={SENDER_EMAIL} to {email}")
+            send_email(title, message_text + message_html, sender_email=SENDER_EMAIL, receiver_email=email)
         else:
             return generate_html_text(message_text + message_html, css=css)
 
