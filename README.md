@@ -1,6 +1,6 @@
 # An Extensible Web Scraper for Apartments
 **Scrapes, Stores in Database, Generates Metrics, Emails**
-![What it looks like](/doc/apartmentscraper.gif?raw=true "Quick Demo Email")
+![What it looks like](/docs/apartmentscraper.gif?raw=true "Quick Demo Email")
 
 # Getting Started
 ```bash
